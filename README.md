@@ -99,6 +99,38 @@
 - `1011`：登录成功
 - `9908`：可视为登录有效（按 DEMO 逻辑）
 
+## Git：确认“已全部纳入版本库”
+
+若你感觉“提交不全”，先在仓库根目录执行：
+
+```powershell
+git add -A
+git status
+```
+
+再运行自检脚本（会扫描磁盘上除 `.git` 外的每个文件是否已被 `git` 跟踪）：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\verify-all-tracked.ps1
+```
+
+输出 `OK` 即表示：**工作区文件与索引一致，没有漏跟踪的文件**。
+
+说明：`vendor/as3-crypto` 目录内**不应再保留**嵌套的 `.git` 仓库；本仓库已在 `.gitignore` 中忽略 `vendor/as3-crypto/.git/`，并把该库以**普通源码文件**方式完整纳入，避免克隆后只有空壳子目录。
+
+### 克隆后没有 `vendor` 目录怎么办
+
+本仓库**应当**包含完整的 `vendor/as3-crypto`（约三百余个文件）。若你本地看不到 `vendor`：
+
+1. 确认克隆的是**本仓库最新提交**（含 `vendor` 的那次），并已 `git pull`。
+2. 若目录被误删，可在仓库根目录执行恢复脚本（会重新从 GitHub 拉取 as3-crypto 到 `vendor/as3-crypto`，并删除嵌套 `.git` 以与工程一致）：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\restore-vendor.ps1
+```
+
+3. 仍没有时，在本机执行 `git ls-files vendor | measure`，若行数为 0，说明当前检出的不是完整历史，请向提供仓库的一方确认是否已推送包含 `vendor` 的提交。
+
 ## 常见问题
 
 - 报 `security_error`

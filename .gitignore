@@ -1,0 +1,13 @@
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Nested git clone (vendor library is vendored as plain files)
+vendor/as3-crypto/.git/
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*~
