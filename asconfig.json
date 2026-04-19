@@ -1,0 +1,12 @@
+{
+  "config": "flex",
+  "compilerOptions": {
+    "source-path": [
+      "src",
+      "vendor/as3-crypto/src"
+    ]
+  },
+  "files": [
+    "src/Main.as"
+  ]
+}
